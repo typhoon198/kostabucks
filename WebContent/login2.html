@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- 메인페이지에 포함될때 삭데할 영역 시작 -->
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>로그인</title>
+<!-- 메인페이지에 포함될때 삭데할 영역 끝 -->
+
+<script>
+        $(function() {
+        //window.addEventListener('load', function() {
+            //1.localStorage의 item(이름: loginInfo) 찾기
+            var loginInfoValue = localStorage.getItem('loginInfo');
+            //2. 1의 결과가 null이 아니면 1의 결과를 아이디 입련 란에 설정한다.
+            var $idObj = $('form.login input[name=id]');
+            if(loginInfoValue != null && loginInfoValue != ''){
+                $idObj.val(loginInfoValue);
+            }
+            var $formObj = $('form.login');
+            $formObj.submit(function(event) {
+                //아이디 값 유효성 검사
+                //비밀번호 값 유효성 검사
+
+                //유효성 검사가 실패된 경우에는 전송 중지
+                //event.preventDefault();
+
+                //localstorage의 item(이름:loginInfo) 삭제
+                localStorage.removeItem('loginInfo');
+
+                //아이디 저장 체크된 경우 localStorage의 item(이름:loginInfo, 값:입력한 아이디 값) 추가
+                //var idObj = document.querySelector('form.login>input[name=id]');
+                //1)DOM트리에서 체크박스 찾기
+                var $checkboxObj = $('form.login input[type=checkbox]');
+                //2 체크 여부 확인
+                if($checkboxObj.is(":checked")){//체크된 경우
+                    //alert('idObj.value=' + idObj);
+                    localStorage.setItem('loginInfo', $idObj.val()); //localStorage에 추가
+                };
+				//var url = 'http://localhost:8888/myback/login';
+				//var url = 'http://localhost:8888/mybackjson/login';
+				//var url = 'http//http://localhost:8888/mybackfrontcontroller/login';
+				var url = './login'; 상대경로
+                //서버로 AJAX 요청, 응답
+                $.ajax({
+                      url: url
+                    , method: 'post'
+                    , data: {id:$('form.login input[name=id]').val(),
+                    		pwd:$('form.login input[name=pwd]').val()
+                    		} /*id=id1&pwd=p1*/
+                    , success:function(responseData){
+                        alert(responseData);
+                        location.href="semantic_css_jq.jsp";
+                        
+                        //alert(responseData.status);
+                        //if(responseData.status == 1) {//성공
+                        //}	
+                        //}else{//실패인경우 
+                        //	alert(responseData.msg);
+                        //}
+                    }
+                    , error:function(xhr){
+                        alert(xhr.status);
+                    }
+                });
+                //return false;
+                event.preventDefault();
+            });
+        });
+    </script>
+<!-- 메인페이지에 포함될때 삭데할 영역 시작 -->
+
+</head>
+<body>
+<!-- 메인페이지에 포함될때 삭데할 영역 끝 -->
+
+	<form class="login" method="post" action="http://www.daum.net">
+		<label>아이디:<input type="text" name="id" size="50" required /></label><br /> <label>비밀번호:<input
+			type="password" name="pwd" size="50" required /></label><br /> <input type="checkbox"
+			checked /><span>아이디 저장</span>
+		<button type="submit">로그인</button>
+	</form>
+	
+	<!-- 메인페이지에 포함될때 삭데할 영역 시작 -->
+	
+</body>
+</html>
+
+<!-- 메인페이지에 포함될때 삭데할 영역 끝 -->

@@ -1,0 +1,8 @@
+/login=com.day.control.CustomerController
+/logout=com.day.control.CustomerController
+/productlist=com.day.control.ProductController
+/productinfo=com.day.control.ProductController
+/putcart=com.day.control.CartController
+/viewcart=com.day.control.CartController
+/addorder=com.day.control.OrderController
+/orderlist=com.day.control.OrderController

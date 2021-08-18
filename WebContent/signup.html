@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가입</title>
+    <!--주의 순서! 자바의 오버라이딩과 비슷하게 덮어쓰기가능 밑에 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        form.signup {
+            width: 100%;
+        }
+
+        form.signup>label {
+            padding: 10px;
+        }
+
+
+        form.signup>label>span::after {
+            content: " : ";
+        }
+
+        form.signup input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            outline: none;
+            /* 테투리 둥글게 */
+        }
+
+        form.signup input[name='id'] {
+            width: 40%;
+        }
+
+        form.signup input.zipcode {
+            width: 30%;
+        }
+
+        form.signup input:focus {
+            background-color: azure;
+        }
+
+        /* form.signup button[type='submit'] {
+            display: none;
+        } */
+
+        form.signup button {
+            outline: none;
+            padding: 12px 20px;
+            margin: 8px 0;
+        }
+
+        /* input.pwd1,
+        input.basicaddr,
+        input[name='name'],
+        input[name='pwd'],
+        input[name='addr'] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0
+        }
+        input[name='id'] {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0
+        } */
+    </style>
+    <script>
+        $(function () {
+
+            // var $signBt = $('form>button.sign');
+            // $('form input[name=id]').focus(function () {
+            //     $signBt.hide();
+            // });
+            var $idObj = $('form.signup>label>input[name=id]'); //ID
+            // var $btIdDupchkObj = $('form.signup button[id=iddupchk]'); //중복확인
+            var $btIdDupchkObj = $('#iddupchk'); //중복확인
+            var $btSearchzipObj = $('form.signup button.searchzip'); //우편번호입력란
+            var $btSubmitObj = $('form.signup button[type=submit]'); //가입버튼;
+
+
+            console.log($idObj);
+            console.log($btIdDupchkObj);
+            console.log($btSearchzipObj);
+            console.log($btSubmitObj);
+
+
+            //id입력란 focus시 '가입'버튼 감추기
+            $idObj.focus(function () {
+                $btSubmitObj.hide();
+            });
+
+            //중복확인 click시 입력된 아이디값이'id9' 인 경우 '가입'버튼 보여주기
+            $btIdDupchkObj.click(function () {
+                var $inValue = $idObj.val();//아이디값
+                if ($inValue == 'id9') {
+                    $btSubmitObj.show();
+                }
+            });
+            //우편번호검색 clilck시 searchzip.html 팝업창 띄우기
+            $btSearchzipObj.click(function () {
+                var url = './searchzip.html'
+                var opt = 'width = 500 height = 500';
+                var name = 'searchzip.html';
+                window.open(url, name, opt);
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <form class="signup" method="post" action="http://www.daum.net">
+        <label><span>ID</span><input type="text" name="id" required placeholder="아이디를 입력하세요" /></label>
+        <button id="iddupchk" type="button">아이디중복</button><br /><br />
+
+        <label><span>비밀번호</span><input type="password" name="pwd" required /></label>
+        <label><span>비밀번호확인</span><input type="password" class="pwd1" required /></label><br />
+        <!-- 서버로 전송하진않으면 name속성 x -->
+
+        <label><span>이름</span><input type="text" name="name" required /></label><br />
+        <label><span>주소</span><input type="text" maxlength="5" class="zipcode" readonly required /></label>
+        <button class="searchzip" type="button">우편번호검색</button><br />
+        <input type="text" class="basicaddr" readonly />
+        <input type="text" name="addr" />
+
+        <button type="submit">가입</button>
+        <!--input type="submit" value -->
+
+    </form>
+
+
+</body>
+
+</html>
